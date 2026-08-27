@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AnimeStream — Tracker Legal</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@600;700&display=swap');
+
+:root{
+  --bg:#0a0a0f;--surface:#111118;--card:#16161f;--border:#1e1e2e;
+  --accent:#e85d75;--accent2:#f5a623;--blue:#4e9eff;--purple:#9b59b6;
+  --text:#eaeaf0;--sub:#7878a0;--green:#2ecc71;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+/* BG BLOBS */
+.bg-blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.07;}
+.blob1{width:600px;height:600px;background:#e85d75;top:-200px;left:-100px;}
+.blob2{width:500px;height:500px;background:#4e9eff;bottom:-150px;right:-100px;}
+.blob3{width:400px;height:400px;background:#9b59b6;top:40%;left:40%;}
+
+/* NAVBAR */
+.navbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,10,15,0.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+  display:flex;align-items:center;gap:20px;
+  height:64px;
+}
+.nav-logo{
+  font-family:'Rajdhani',sans-serif;
+  font-size:24px;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:1px;white-space:nowrap;
+}
+.nav-tabs{display:flex;gap:4px;flex:1;overflow-x:auto;}
+.nav-tab{
+  padding:7px 16px;border-radius:8px;cursor:pointer;
+  font-size:13px;font-weight:500;color:var(--sub);
+  border:none;background:none;white-space:nowrap;
+  transition:all 0.18s;
+}
+.nav-tab:hover{color:var(--text);background:var(--card);}
+.nav-tab.active{color:var(--accent);background:rgba(232,93,117,0.12);}
+
+.nav-search{
+  display:flex;align-items:center;gap:8px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:7px 14px;
+  transition:border-color 0.2s;
+}
+.nav-search:focus-within{border-color:var(--accent);}
+.nav-search input{
+  background:none;border:none;outline:none;
+  color:var(--text);font-family:'Inter',sans-serif;font-size:13px;width:160px;
+}
+.nav-search input::placeholder{color:var(--sub);}
+.search-btn{background:none;border:none;cursor:pointer;color:var(--sub);font-size:15px;}
+
+/* MAIN */
+.main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:28px 20px 60px;}
+
+/* SECTION HEADER */
+.section-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;
+}
+.section-hd h2{
+  font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;
+  letter-spacing:0.5px;display:flex;align-items:center;gap:8px;
+}
+.section-hd h2 span{color:var(--accent);}
+.see-all{
+  font-size:12px;color:var(--accent);cursor:pointer;
+  padding:5px 12px;border-radius:8px;border:1px solid rgba(232,93,117,0.3);
+  background:rgba(232,93,117,0.08);transition:all 0.15s;
+}
+.see-all:hover{background:rgba(232,93,117,0.18);}
+
+/* HERO / FEATURED */
+.hero{
+  border-radius:20px;overflow:hidden;position:relative;
+  height:360px;margin-bottom:36px;cursor:pointer;
+}
+.hero-img{width:100%;height:100%;object-fit:cover;}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(10,10,15,0.95) 0%,rgba(10,10,15,0.5) 50%,transparent 100%);
+}
+.hero-content{
+  position:absolute;bottom:0;left:0;padding:36px;max-width:560px;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent);color:#fff;
+  font-size:11px;font-weight:700;letter-spacing:1px;
+  padding:4px 12px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;
+}
+.hero-title{font-size:clamp(20px,3vw,32px);font-weight:800;line-height:1.2;margin-bottom:8px;}
+.hero-meta{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
+.hero-meta span{font-size:12px;color:var(--sub);display:flex;align-items:center;gap:4px;}
+.hero-desc{font-size:13px;color:#aaa;line-height:1.6;margin-bottom:16px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.hero-btns{display:flex;gap:10px;}
+.btn-watch{
+  display:flex;align-items:center;gap:6px;
+  padding:10px 20px;border-radius:10px;border:none;cursor:pointer;
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:600;
+  transition:all 0.18s;
+}
+.btn-watch.primary{background:var(--accent);color:#fff;}
+.btn-watch.primary:hover{background:#d44;transform:scale(1.03);}
+.btn-watch.outline{background:rgba(255,255,255,0.1);color:var(--text);border:1px solid var(--border);}
+.btn-watch.outline:hover{background:rgba(255,255,255,0.15);}
+
+/* ANIME GRID */
+.anime-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+  gap:16px;margin-bottom:40px;
+}
+
+/* ANIME CARD */
+.anime-card{
+  background:var(--card);border-radius:14px;overflow:hidden;
+  border:1px solid var(--border);cursor:pointer;
+  transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;
+  position:relative;
+}
+.anime-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 32px rgba(0,0,0,0.4);
+  border-color:var(--accent);
+}
+.card-img-wrap{position:relative;overflow:hidden;aspect-ratio:3/4;}
+.card-img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
+.anime-card:hover .card-img{transform:scale(1.05);}
+.card-img-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#1a1a28,#12121e);
+  font-size:48px;
+}
+.card-score{
+  position:absolute;top:8px;right:8px;
+  background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);
+  padding:3px 8px;border-radius:8px;
+  font-size:11px;font-weight:700;color:var(--accent2);
+}
+.card-ep{
+  position:absolute;bottom:8px;left:8px;
+  background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);
+  padding:3px 8px;border-radius:8px;
+  font-size:10px;color:var(--text);
+}
+.card-new{
+  position:absolute;top:8px;left:8px;
+  background:var(--accent);color:#fff;
+  padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;
+}
+.card-body{padding:10px 12px 12px;}
+.card-title{
+  font-size:13px;font-weight:600;line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin-bottom:5px;
+}
+.card-sub{
+  display:flex;gap:6px;flex-wrap:wrap;
+}
+.card-tag{
+  font-size:10px;padding:2px 7px;border-radius:6px;
+  background:rgba(78,158,255,0.12);color:var(--blue);
+  border:1px solid rgba(78,158,255,0.2);
+}
+.card-tag.airing{background:rgba(46,204,113,0.12);color:var(--green);border-color:rgba(46,204,113,0.2);}
+.card-tag.movie{background:rgba(245,166,35,0.12);color:var(--accent2);border-color:rgba(245,166,35,0.2);}
+
+/* SCHEDULE TABLE */
+.schedule-wrap{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;margin-bottom:40px;
+}
+.schedule-days{
+  display:flex;overflow-x:auto;
+  border-bottom:1px solid var(--border);
+}
+.day-tab{
+  padding:12px 20px;cursor:pointer;font-size:13px;
+  font-weight:500;color:var(--sub);white-space:nowrap;
+  border-bottom:2px solid transparent;transition:all 0.18s;
+}
+.day-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.day-tab:hover{color:var(--text);}
+
+.schedule-list{padding:16px;}
+.schedule-item{
+  display:flex;align-items:center;gap:14px;
+  padding:12px;border-radius:12px;cursor:pointer;
+  transition:background 0.15s;border-bottom:1px solid rgba(30,30,46,0.5);
+}
+.schedule-item:last-child{border-bottom:none;}
+.schedule-item:hover{background:var(--surface);}
+.sched-img{
+  width:52px;height:72px;border-radius:8px;object-fit:cover;flex-shrink:0;
+  background:var(--border);
+}
+.sched-info{flex:1;min-width:0;}
+.sched-title{font-size:14px;font-weight:600;margin-bottom:4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sched-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.sched-ep{font-size:12px;color:var(--accent);font-weight:600;}
+.sched-time{font-size:11px;color:var(--sub);}
+.sched-studio{font-size:11px;color:var(--sub);}
+.sched-platforms{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+.platform-badge{
+  font-size:10px;padding:2px 8px;border-radius:6px;
+  font-weight:600;cursor:pointer;transition:opacity 0.15s;
+}
+.platform-badge:hover{opacity:0.8;}
+.plt-cr{background:rgba(249,127,4,0.15);color:#f97f04;border:1px solid rgba(249,127,4,0.3);}
+.plt-bili{background:rgba(0,161,214,0.15);color:#00a1d6;border:1px solid rgba(0,161,214,0.3);}
+.plt-iqiyi{background:rgba(0,206,120,0.15);color:#00ce78;border:1px solid rgba(0,206,120,0.3);}
+.plt-wetv{background:rgba(49,151,255,0.15);color:#3197ff;border:1px solid rgba(49,151,255,0.3);}
+.plt-nf{background:rgba(229,9,20,0.15);color:#e50914;border:1px solid rgba(229,9,20,0.3);}
+.plt-mal{background:rgba(46,81,162,0.15);color:#2e51a2;border:1px solid rgba(46,81,162,0.3);}
+
+/* STREAMING PLATFORM LINKS */
+.platform-section{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:24px;margin-bottom:40px;
+}
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:16px;}
+.platform-card{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:18px 12px;border-radius:12px;cursor:pointer;
+  border:1px solid var(--border);background:var(--surface);
+  transition:all 0.18s;text-decoration:none;
+}
+.platform-card:hover{border-color:var(--accent);background:rgba(232,93,117,0.06);transform:translateY(-3px);}
+.platform-icon{font-size:32px;}
+.platform-name{font-size:12px;font-weight:600;color:var(--text);}
+.platform-desc{font-size:10px;color:var(--sub);text-align:center;}
+.platform-free{font-size:10px;font-weight:700;color:var(--green);}
+
+/* MODAL */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.75);
+  z-index:200;display:none;align-items:center;justify-content:center;
+  padding:20px;backdrop-filter:blur(6px);
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;width:100%;max-width:680px;
+  max-height:90vh;overflow-y:auto;
+}
+.modal-header{position:relative;height:240px;overflow:hidden;border-radius:20px 20px 0 0;}
+.modal-bg{width:100%;height:100%;object-fit:cover;}
+.modal-overlay-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,var(--card) 0%,transparent 60%);
+}
+.modal-close{
+  position:absolute;top:14px;right:14px;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(0,0,0,0.6);border:none;cursor:pointer;
+  color:var(--text);font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-body{padding:20px 24px 28px;}
+.modal-title{font-size:22px;font-weight:800;margin-bottom:4px;}
+.modal-title-en{font-size:13px;color:var(--sub);margin-bottom:14px;}
+.modal-meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.meta-chip{
+  font-size:11px;padding:3px 10px;border-radius:8px;
+  background:var(--surface);border:1px solid var(--border);color:var(--sub);
+}
+.meta-chip.score{color:var(--accent2);border-color:rgba(245,166,35,0.3);background:rgba(245,166,35,0.08);}
+.meta-chip.status-airing{color:var(--green);border-color:rgba(46,204,113,0.3);background:rgba(46,204,113,0.08);}
+.modal-desc{font-size:13px;line-height:1.7;color:#aaa;margin-bottom:18px;}
+.modal-genres{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+.genre-tag{
+  font-size:11px;padding:4px 12px;border-radius:20px;
+  background:rgba(78,158,255,0.1);color:var(--blue);
+  border:1px solid rgba(78,158,255,0.2);
+}
+.modal-stream-label{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+.modal-platforms{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.modal-plat-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:10px;cursor:pointer;
+  font-size:13px;font-weight:600;text-decoration:none;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--text);transition:all 0.18s;
+}
+.modal-plat-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.modal-trailer{margin-bottom:16px;}
+.modal-trailer h4{font-size:13px;color:var(--sub);margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;font-weight:700;}
+.trailer-wrap{
+  border-radius:10px;overflow:hidden;aspect-ratio:16/9;
+  background:var(--surface);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border:1px solid var(--border);
+}
+.trailer-wrap:hover .trailer-play{transform:scale(1.1);}
+.trailer-play{font-size:48px;transition:transform 0.2s;}
+
+/* LOADING */
+.loading{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:60px;gap:14px;
+}
+.spinner{
+  width:40px;height:40px;border-radius:50%;
+  border:3px solid var(--border);border-top-color:var(--accent);
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading p{color:var(--sub);font-size:13px;}
+
+/* HORIZONTAL SCROLL */
+.hscroll{
+  display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;margin-bottom:40px;
+}
+.hscroll::-webkit-scrollbar{height:3px;}
+.hscroll .anime-card{flex-shrink:0;width:155px;}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:24px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text);padding:10px 22px;border-radius:20px;
+  font-size:13px;z-index:999;transition:transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);white-space:nowrap;
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* EMPTY */
+.empty-state{
+  text-align:center;padding:48px 20px;color:var(--sub);
+}
+.empty-state .es-icon{font-size:48px;margin-bottom:12px;}
+.empty-state p{font-size:14px;}
+
+/* SEARCH RESULTS */
+.search-section{display:none;}
+.search-section.active{display:block;}
+
+@media(max-width:600px){
+  .navbar{padding:0 14px;gap:10px;}
+  .nav-search input{width:100px;}
+  .main{padding:16px 12px 40px;}
+  .hero{height:260px;}
+  .hero-content{padding:20px;}
+  .anime-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-blobs">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo">🎌 AnimeStream</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('beranda',this)">🏠 Beranda</button>
+    <button class="nav-tab" onclick="switchTab('airing',this)">📡 Tayang</button>
+    <button class="nav-tab" onclick="switchTab('seasonal',this)">🌸 Seasonal</button>
+    <button class="nav-tab" onclick="switchTab('schedule',this)">📅 Jadwal</button>
+    <button class="nav-tab" onclick="switchTab('platform',this)">▶️ Platform</button>
+  </div>
+  <div class="nav-search">
+    <input id="searchInput" placeholder="Cari anime..." onkeydown="if(event.key==='Enter')doSearch()"/>
+    <button class="search-btn" onclick="doSearch()">🔍</button>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- ══════════════════ BERANDA ══════════════════ -->
+  <div id="tab-beranda" class="tab-content">
+
+    <!-- HERO -->
+    <div class="hero" id="heroSection" onclick="openHeroModal()">
+      <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);display:flex;align-items:center;justify-content:center;font-size:80px;">🎌</div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge">⭐ Featured Anime</div>
+        <div class="hero-title" id="heroTitle">Memuat anime terpopuler...</div>
+        <div class="hero-meta">
+          <span id="heroScore">⭐ -</span>
+          <span id="heroEps">🎬 - ep</span>
+          <span id="heroType">📺 -</span>
+          <span id="heroStatus">🔴 -</span>
+        </div>
+        <div class="hero-desc" id="heroDesc">Memuat deskripsi...</div>
+        <div class="hero-btns">
+          <button class="btn-watch primary" onclick="event.stopPropagation();openHeroModal()">▶ Lihat Detail</button>
+          <button class="btn-watch outline" onclick="event.stopPropagation();openMAL()">📋 MAL</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AIRING NOW -->
+    <div class="section-hd">
+      <h2>📡 Sedang <span>Tayang</span></h2>
+      <div class="see-all" onclick="switchTab('airing',document.querySelector('[onclick=\\'switchTab(\\'airing\\',this)\\']'))">Lihat semua →</div>
+    </div>
+    <div id="airingScroll" class="hscroll"><div class="loading"><div class="spinner"></div><p>Memuat...</p></div></div>
+
+    <!-- TOP ANIME -->
+    <div class="section-hd" style="margin-top:8px;">
+      <h2>🏆 Top <span>Anime</span></h2>
+      <div class="see-all">Lihat semua →</div>
+    </div>
+    <div id="topGrid" class="anime-grid"><div class="loading" style="grid-column:1/-1;"><div class="spinner"></div><p>Memuat...</p></div></div>
+
+  </div>
+
+  <!-- ══════════════════ AIRING ══════════════════ -->
+  <div id="tab-airing" class="tab-content" style="display:none;">
+    <div class="section-hd">
+      <h2>📡 Anime Sedang <span>Tayang</span></h2>
+    </div>
+    <div id="airingGrid" class="anime-grid"><div class="loading" style="grid-column:1/-1;"><div class="spinner"></div><p>Memuat...</p></div></div>
+  </div>
+
+  <!-- ══════════════════ SEASONAL ══════════════════ -->
+  <div id="tab-seasonal" class="tab-content" style="display:none;">
+    <div class="section-hd">
+      <h2>🌸 Anime <span>Seasonal</span></h2>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+      <button class="nav-tab active" id="s-winter" onclick="loadSeason('winter','2025',this)">❄️ Winter 2025</button>
+      <button class="nav-tab" id="s-spring" onclick="loadSeason('spring','2025',this)">🌸 Spring 2025</button>
+      <button class="nav-tab" id="s-summer" onclick="loadSeason('summer','2025',this)">☀️ Summer 2025</button>
+      <button class="nav-tab" id="s-fall" onclick="loadSeason('fall','2025',this)">🍂 Fall 2025</button>
+    </div>
+    <div id="seasonalGrid" class="anime-grid"><div class="loading" style="grid-column:1/-1;"><div class="spinner"></div><p>Memuat...</p></div></div>
+  </div>
+
+  <!-- ══════════════════ SCHEDULE ══════════════════ -->
+  <div id="tab-schedule" class="tab-content" style="display:none;">
+    <div class="section-hd">
+      <h2>📅 Jadwal <span>Rilis</span></h2>
+    </div>
+    <div class="schedule-wrap">
+      <div class="schedule-days" id="schedDays"></div>
+      <div class="schedule-list" id="schedList"><div class="loading"><div class="spinner"></div><p>Memuat jadwal...</p></div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ PLATFORM ══════════════════ -->
+  <div id="tab-platform" class="tab-content" style="display:none;">
+    <div class="section-hd">
+      <h2>▶️ Platform <span>Legal</span></h2>
+    </div>
+    <p style="color:var(--sub);font-size:13px;margin-bottom:24px;line-height:1.6;">
+      Semua platform di bawah ini adalah layanan streaming anime <strong style="color:var(--green)">resmi & legal</strong>.
+      Dukung industri anime dengan nonton di platform legal! 🙌
+    </p>
+    <div class="platform-grid">
+      <a class="platform-card" href="https://www.crunchyroll.com" target="_blank">
+        <div class="platform-icon">🟠</div>
+        <div class="platform-name">Crunchyroll</div>
+        <div class="platform-desc">Terbesar, ribuan judul</div>
+        <div class="platform-free">Freemium</div>
+      </a>
+      <a class="platform-card" href="https://www.bilibili.tv" target="_blank">
+        <div class="platform-icon">🔵</div>
+        <div class="platform-name">Bilibili TV</div>
+        <div class="platform-desc">Bany
